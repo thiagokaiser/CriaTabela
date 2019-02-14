@@ -1,0 +1,67 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Tag
+        <small>View</small>
+    </h1>                    
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Your Page Content Here -->                    
+    <div class="box box-default">            
+        <div class="box-body">             
+            
+            <a class="btn btn-default" href="{% url '#appname:#ltabela_list' %}">Voltar</a>
+            <a class="btn btn-default" href="{% url '#appname:#ltabela_edit' pk=#ltabela.pk %}">Editar</a>
+            <a id="bt-del" class="btn btn-default" 
+               data-toggle="confirmation" data-placement="bottom"
+               data-btn-ok-label="Confirmar" data-btn-ok-icon="glyphicon glyphicon-share-alt"
+               data-btn-ok-class="btn-success"
+               data-btn-cancel-label="Cancelar" data-btn-cancel-icon="glyphicon glyphicon-ban-circle"
+               data-btn-cancel-class="btn-danger"
+               data-title="Tem certeza?" data-content="A #ltabela será excluida permanentemente.">Deletar </a>
+            <p></p>       
+            <table class="table" style="max-width:300px;">  {% csrf_token %}
+                #camposhtmlview               
+                
+            </table>
+
+
+            </table>                    
+            
+        </div>
+    </div>
+
+</section><!-- /.content -->	
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">        
+
+    $('#bt-del').confirmation({
+        rootSelector: '[data-toggle=confirmation]',
+        onConfirm: function () {
+            var #ltabela_list = [];        
+            #ltabela_list.push({{ #ltabela.pk }});
+            $.ajax({
+                url:"{% url '#appname:#ltabela_del' %}",
+                type: "POST",            
+                data: {#ltabela_lista: #ltabela_list, csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success:function(response){
+                window.location.href= "{% url '#appname:#ltabela_list' %}"
+                },
+                complete:function(){},
+                error:function (xhr, textStatus, thrownError){}
+            });
+        }
+    });    
+
+</script>
+{% endblock javascript %}

@@ -1,0 +1,70 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Tag
+        <small>List</small>
+    </h1>                    
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <!-- Your Page Content Here -->                    
+    <div class="box box-default">            
+        <div class="box-body">             
+            <a class="btn btn-default" href="{% url '#appname:#ltabela_add' %}"><span class="fa fa-plus-circle"></span></a>
+            <p></p>            
+            <div class="table-responsive">
+                <div style="max-width:400px;">
+                    <table class="table table-hover table-selectable" style="max-width:300px" id="table_#ltabela">  
+                        <thead>
+                            <tr>
+                                #htmllistheader                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for #ltabela in #ltabelas %}                    
+                            <tr id="{{ #ltabela.pk }}">
+                                #camposhtmllist                                
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>
+    </div>
+
+</section><!-- /.content -->	
+
+{% endblock %}
+
+{% block javascript %}
+{% load static %}
+<script type="text/javascript" src="{% static 'app/plugins/datatables/jquery.dataTables.min.js'  %}"></script>
+<script type="text/javascript" src="{% static 'app/plugins/datatables/dataTables.bootstrap.min.js'  %}"></script>
+<script type="text/javascript">   
+
+    $(document).ready(function(){                
+        $('#table_#ltabela').DataTable({
+          "paging": false,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": false,
+          "autoWidth": false,  
+          "dom": '<"top"i>rt<"bottom"flp><"clear">'
+        });
+    });     
+
+    $(".colunatable").click(function(e) {
+        chave = $(this).closest("tr").attr("id")
+        window.location.href = "/#appname/#ltabela_view/" + chave + "/";
+    });
+
+</script>
+{% endblock javascript %}
